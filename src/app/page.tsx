@@ -1,65 +1,76 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { Newspaper, PenTool, Mail, ArrowRight } from 'lucide-react';
 
-export default function Home() {
+export default function Dashboard() {
+  const tools = [
+    {
+      href: '/newsletter',
+      icon: Newspaper,
+      title: 'Bản Tin Công Nghệ',
+      desc: 'Tự động cào tin, phân loại và tóm tắt tin tức CIC.',
+      color: 'bg-blue-500'
+    },
+    {
+      href: '/social-post',
+      icon: PenTool,
+      title: 'Tạo Bài Viết Social',
+      desc: 'Viết caption Facebook/LinkedIn từ link bài viết.',
+      color: 'bg-purple-500'
+    },
+    {
+      href: '/email-drafter',
+      icon: Mail,
+      title: 'Soạn Thảo Email',
+      desc: 'Hỗ trợ viết email marketing chuyên nghiệp.',
+      color: 'bg-emerald-500'
+    }
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="p-10">
+      <header className="mb-12">
+        <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Xin chào, Admin CIC 👋</h1>
+        <p className="text-xl text-slate-500">Bạn muốn tự động hóa nội dung gì hôm nay?</p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tools.map((tool) => {
+          const Icon = tool.icon;
+          return (
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <div className={`w-14 h-14 ${tool.color} rounded-xl flex items-center justify-center text-white mb-6 shadow-md group-hover:scale-110 transition-transform`}>
+                <Icon size={28} />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-800 mb-2 group-hover:text-blue-700 transition-colors">{tool.title}</h3>
+              <p className="text-slate-500 mb-6 leading-relaxed">
+                {tool.desc}
+              </p>
+              <div className="flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
+                Truy cập tool <ArrowRight size={18} className="ml-2" />
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      <div className="mt-12 bg-indigo-900 rounded-3xl p-10 text-white relative overflow-hidden">
+        <div className="relative z-10 max-w-2xl">
+          <h2 className="text-3xl font-bold mb-4">Trợ lý AI Thông Minh</h2>
+          <p className="text-indigo-200 mb-8 text-lg">
+            Cần ý tưởng content mới? Hay muốn phân tích dữ liệu website? Chat ngay với trợ lý ảo được tích hợp sâu vào dữ liệu CIC.
           </p>
+          <button className="px-8 py-3 bg-white text-indigo-900 font-bold rounded-full hover:bg-indigo-50 transition-colors">
+            Chat Ngay
+          </button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+          <Newspaper size={300} />
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 InkSpace - Canvas Ghi Chú Vô Hạn
 
-## Getting Started
+Canvas vô hạn kết hợp vẽ tự do, ghi chú phong phú và tìm kiếm thông minh - được hỗ trợ bởi AI.
 
-First, run the development server:
+## ✨ Tính Năng
+
+### MVP (Phase 1)
+- ✍️ **Canvas Vô Hạn** - Pan, zoom, không giới hạn
+- 🎨 **Công Cụ Vẽ** - Vẽ tự do, shapes, màu sắc tùy chỉnh
+- 📝 **Ghi Chú** - Sticky notes và text boxes với rich editing
+- 📁 **Import Files** - Kéo thả ảnh và PDFs
+- 🔍 **Tìm Kiếm** - Tìm kiếm nhanh trong tất cả ghi chú
+- 💾 **Lưu Tự Động** - Đồng bộ vào Supabase mỗi 30 giây
+- 🌓 **Dark Mode** - Chuyển đổi theme linh hoạt
+- 📱 **Mobile Friendly** - Hỗ trợ touch gestures
+
+### Coming Soon (Phase 2)
+- 🤖 **AI Search** - Tìm kiếm ngữ nghĩa
+- 📊 **Knowledge Graph** - Kết nối giữa các ghi chú  
+- 🎤 **Voice Notes** - Ghi âm và transcribe
+- 👥 **Real-time Collaboration** - Làm việc cùng nhau
+
+## 🚀 Setup
+
+### 1. Cài Đặt Dependencies
+
+```bash
+npm install
+```
+
+### 2. Cấu Hình Environment Variables
+
+Tạo file `.env.local`:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 3. Setup Database
+
+Chạy migration trong Supabase SQL Editor:
+
+```bash
+# Copy nội dung từ supabase/migrations/001_init_inkspace.sql
+# Paste vào Supabase Dashboard > SQL Editor > Run
+```
+
+### 4. Tạo Storage Bucket
+
+Trong Supabase Dashboard > Storage:
+1. Tạo bucket mới tên `canvas-files`
+2. Set thành Public
+3. Thêm policy "Allow all for MVP"
+
+### 5. Chạy Dev Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000/canvas](http://localhost:3000/canvas)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Cấu Trúc Thư Mục
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   └── canvas/
+│       ├── page.tsx              # Main canvas page
+│       ├── components/           # Canvas components
+│       │   ├── InfiniteCanvas.tsx
+│       │   ├── CanvasToolbar.tsx
+│       │   ├── StickyNote.tsx
+│       │   ├── TextBox.tsx
+│       │   ├── SearchBar.tsx
+│       │   └── ...
+│       ├── hooks/                # Custom hooks
+│       │   ├── useSupabaseCanvas.ts
+│       │   ├── useSearch.ts
+│       │   └── ...
+│       └── tools/                # Drawing tools
+│           └── DrawingTools.tsx
+├── lib/
+│   └── supabase.ts              # Supabase client
+└── ...
+```
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend:** Next.js 15 + React + TypeScript
+- **Canvas Engine:** tldraw SDK
+- **Rich Text:** TipTap
+- **Database:** Supabase (PostgreSQL)
+- **Storage:** Supabase Storage
+- **Styling:** Tailwind CSS
+- **UI Components:** Radix UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📝 Database Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### `canvases`
+- Lưu canvas settings, viewport, title
+- JSONB cho viewport & settings
 
-## Deploy on Vercel
+### `canvas_items`
+- Lưu tất cả objects (drawings, notes, shapes, files)
+- Polymorphic design với JSONB data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `canvas_files`
+- Metadata cho uploaded files
+- Reference đến Supabase Storage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⌨️ Phím Tắt
+
+- `Ctrl/Cmd + Z` - Hoàn tác
+- `Ctrl/Cmd + Shift + Z` - Làm lại
+- `Ctrl/Cmd + S` - Lưu
+- `Ctrl/Cmd + K` - Tìm kiếm
+- `Delete` - Xóa items đã chọn
+- `Ctrl/Cmd + D` - Nhân bản
+- `Space + Kéo` - Pan canvas
+- `Ctrl/Cmd + Scroll` - Zoom
+
+## 📊 Development Progress
+
+- ✅ Setup project & Supabase
+- ✅ Database schema
+- ✅ Folder structure
+- ⏳ Canvas core (In Progress)
+- ⏳ Drawing tools
+- ⏳ Notes system
+- ⏳ File import
+- ⏳ Search
+- ⏳ Supabase integration
+- ⏳ UI/UX polish
+- ⏳ Testing
+
+## 📄 License
+
+MIT
+
+---
+
+**Built with ❤️ using InkSpace**

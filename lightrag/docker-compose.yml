@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  lightrag:
+    image: ghcr.io/hkuds/lightrag:latest
+    container_name: lightrag_service
+    ports:
+      - "9621:9621"
+    environment:
+      # --- API KEY (Dùng Gemini) ---
+      - GEMINI_API_KEY=AIzaSyAMYa_CISzewvSQz94epTVKxBhW8BQDM0I  # Điền Key Gemini của bạn vào đây
+      
+      # --- CẤU HÌNH MODEL (Gemini) ---
+      - LLM_BINDING=gemini
+      - LLM_MODEL=gemini-1.5-flash
+      
+      - EMBEDDING_BINDING=gemini
+      - EMBEDDING_MODEL=models/text-embedding-004
+
+      # --- CẤU HÌNH SUPABASE ---
+      - LIGHTRAG_KV_STORAGE=PGKVStorage
+      - LIGHTRAG_VECTOR_STORAGE=PGVectorStorage
+      - LIGHTRAG_GRAPH_STORAGE=PGGraphStorage
+      - LIGHTRAG_DOC_STATUS_STORAGE=PGDocStatusStorage
+      
+      # Thông tin kết nối Supabase (Đã điền)
+      - POSTGRES_HOST=db.wdjabhistqhbrefuoqyc.supabase.co
+      - POSTGRES_PORT=6543
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=xt5m8Li5nwoSrC6n
+      - POSTGRES_DATABASE=postgres
+      
+    volumes:
+      - ./data:/app/data
+    restart: always

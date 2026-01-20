@@ -1,31 +1,14 @@
 'use client'
 
-import { Tldraw, Editor, TLUiOverrides } from 'tldraw'
+import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { useCallback } from 'react'
 import { useSupabaseCanvas } from './hooks/useSupabaseCanvas'
-
-// Custom UI overrides cho InkSpace
-const uiOverrides: TLUiOverrides = {
-    // Tùy chỉnh toolbar actions
-    actions(editor, actions) {
-        return {
-            ...actions,
-            // Có thể thêm custom actions ở đây
-        }
-    },
-    // Tùy chỉnh toolbar items
-    tools(editor, tools) {
-        return {
-            ...tools,
-            // Có thể thêm custom tools ở đây
-        }
-    },
-}
+import { inkspaceOverrides } from './config/inkspace-ui'
 
 export default function CanvasPage() {
     // Connect to Supabase
-    const { canvasId, isLoading, saveViewport } = useSupabaseCanvas()
+    const { canvasId, isLoading } = useSupabaseCanvas()
 
     const handleMount = useCallback((editor: Editor) => {
         // Set canvas settings
@@ -72,7 +55,7 @@ export default function CanvasPage() {
             <div className="absolute top-[57px] left-0 right-0 bottom-0">
                 <Tldraw
                     onMount={handleMount}
-                    overrides={uiOverrides}
+                    overrides={inkspaceOverrides}
                 />
             </div>
         </div>
